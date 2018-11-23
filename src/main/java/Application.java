@@ -3,7 +3,7 @@ import dao.MessageDaoDb;
 import dao.interfaces.MessageDao;
 import reader.MessageReader;
 
-import java.io.IOException;
+import java.sql.SQLException;
 
 public class Application {
 
@@ -17,7 +17,7 @@ public class Application {
                     reader.read()) {
                 messageDao.create(d);
             }
-        } catch (IOException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 

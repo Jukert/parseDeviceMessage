@@ -14,11 +14,12 @@ public class CoordinateUtil {
     private static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 
-        long factor = (long) Math.pow(10, places);
-        value = value * factor;
-        int tmp = (int)value;
-        return (double) tmp / factor;
+        if (String.valueOf(value).length()>places){
+            long factor = (long) Math.pow(10, places);
+            value = value * factor;
+            int tmp = (int)value;
+            return (double) tmp / factor;
+        }
+        return value;
     }
-
-
 }

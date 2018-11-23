@@ -34,22 +34,28 @@ public class DeviceDaoDb extends JdbcDaoTemplate implements DeviceDao {
 
     @Override
     public void remove(String id) {
-
+        throw new IllegalArgumentException("Not found this object");
     }
 
     @Override
     public List<Device> findAll() {
-        return null;
+
+        String sql =
+                "SELECT id,imei " +
+                        "FROM device";
+
+        List<Device> devices = new ArrayList<>();
+        return devices;
     }
 
     @Override
     public Device findOne(int id) {
-        return null;
+        throw new IllegalArgumentException("Not found this object");
     }
 
     @Override
     public Device update(Device device) {
-        return null;
+        throw new IllegalArgumentException("Not found this object");
     }
 
     public Device findByImei(Long imei) {
@@ -60,14 +66,14 @@ public class DeviceDaoDb extends JdbcDaoTemplate implements DeviceDao {
 
         List<Object> deviceProp = new ArrayList<>();
         deviceProp.add(imei);
-        List device = null;
+        List<Device> device = null;
         try {
             device = query(sql, deviceProp, new DeviceMapper());
         } catch (SQLException e) {
             e.printStackTrace();
         }
         if (device.size() > 0)
-            return (Device) device.get(0);
+            return device.get(0);
         else
             return null;
     }

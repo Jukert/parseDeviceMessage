@@ -1,38 +1,40 @@
 package common;
 
-public class Device {
+public final class Device {
 
     private int id;
-    private Long imei;
+    private long imei;
     private String name;
 
 
     public Device() {
     }
 
+    public Device(long imei) {
+        this.imei = imei;
+    }
+
+    public Device(long imei, String name) {
+        this.imei = imei;
+        this.name = name;
+    }
+
+    public Device(int id, long imei, String name) {
+        this.id = id;
+        this.imei = imei;
+        this.name = name;
+    }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Long getImei() {
+    public long getImei() {
         return imei;
-    }
-
-    public void setImei(Long imei) {
-        this.imei = imei;
     }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

@@ -13,8 +13,13 @@ public class MessageDaoDb extends JdbcDaoTemplate implements MessageDao {
 
     private DeviceDao deviceDao;
 
+    public MessageDaoDb() {
+        super();
+        this.deviceDao = new DeviceDaoDb();
+    }
+
     @Override
-    public Message create(Message message) {
+    public Message create(Message message) throws SQLException {
         String sql =
                 "INSERT INTO message " +
                         "(device_id , " +
@@ -28,7 +33,7 @@ public class MessageDaoDb extends JdbcDaoTemplate implements MessageDao {
                         "params) " +
                         "VALUES (" +
                         "(SELECT id from device " +
-                        "WHERE imei=?)," +   //0
+                            "WHERE imei=?)," +   //0
                         "?," +//1
                         "?," +//2
                         "?," +//3
@@ -49,8 +54,8 @@ public class MessageDaoDb extends JdbcDaoTemplate implements MessageDao {
         deviceOptions.add(message.getHeight());
         deviceOptions.add(message.getSats());
         deviceOptions.add(message.getParams());
-        try {
-            deviceDao = new DeviceDaoDb();
+
+
             if (deviceDao.findByImei(message.getDevice().getImei()) != null)
                 queryUpdate(sql,deviceOptions);
             else {
@@ -58,31 +63,26 @@ public class MessageDaoDb extends JdbcDaoTemplate implements MessageDao {
                 System.out.println("Device was create with ime = " + message.getDevice().getImei());
                 queryUpdate(sql,deviceOptions);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
         return message;
     }
 
     @Override
     public void remove(String id) {
-
+        throw new IllegalArgumentException("Not found this object");
     }
 
     @Override
     public List<Message> findAll() {
-        return null;
+        throw new IllegalArgumentException("Not found this object");
     }
 
     @Override
     public Message findOne(int id) {
-        return null;
+        throw new IllegalArgumentException("Not found this object");
     }
 
     @Override
     public Message update(Message message) {
-        return null;
+        throw new IllegalArgumentException("Not found this object");
     }
 }

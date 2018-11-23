@@ -14,7 +14,7 @@ public class DateUtil {
                         dateStr+""+time,
                         DateTimeFormatter.ofPattern(patternDate)
                 )
-                .atZone(ZoneId.systemDefault())
+                .atZone(ZoneId.of("GMT+03:00"))
                 .toEpochSecond();
     }
 }

@@ -1,13 +1,13 @@
 package common;
 
-public class Message {
+public final class Message {
 
 
     private int id;
     private Device device;
     private long date;
-    private Double longitude;
-    private Double latitude;
+    private double longitude;
+    private double latitude;
     private int speed;
     private int course;
     private int height;
@@ -17,85 +17,69 @@ public class Message {
     public Message() {
     }
 
+    public Message(Device device, long date, double longitude, double latitude, int speed, int course, int height, int sats, String params) {
+        this.device = device;
+        this.date = date;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.speed = speed;
+        this.course = course;
+        this.height = height;
+        this.sats = sats;
+        this.params = params;
+    }
+
+    public Message(int id, Device device, long date, double longitude, double latitude, int speed, int course, int height, int sats, String params) {
+        this.id = id;
+        this.device = device;
+        this.date = date;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.speed = speed;
+        this.course = course;
+        this.height = height;
+        this.sats = sats;
+        this.params = params;
+    }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Device getDevice() {
         return device;
     }
 
-    public void setDevice(Device device) {
-        this.device = device;
-    }
-
     public long getDate() {
         return date;
     }
 
-    public void setDate(long date) {
-        this.date = date;
-    }
-
-    public Double getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    public Double getLatitude() {
+    public double getLatitude() {
         return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
     }
 
     public int getSpeed() {
         return speed;
     }
 
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
     public int getCourse() {
         return course;
-    }
-
-    public void setCourse(int course) {
-        this.course = course;
     }
 
     public int getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
     public int getSats() {
         return sats;
     }
 
-    public void setSats(int sats) {
-        this.sats = sats;
-    }
-
     public String getParams() {
         return params;
-    }
-
-    public void setParams(String params) {
-        this.params = params;
     }
 
     @Override

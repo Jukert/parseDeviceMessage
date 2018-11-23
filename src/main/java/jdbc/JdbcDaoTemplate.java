@@ -44,7 +44,6 @@ public class JdbcDaoTemplate {
             while (rs.next()) {//row mapper...
                 items.add(mapper.mapRow(rs, ++i));
             }
-            conn.close();
             return items;
         }
     }
