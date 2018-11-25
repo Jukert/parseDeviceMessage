@@ -3,12 +3,11 @@ package jdbc;
 import org.postgresql.ds.PGPoolingDataSource;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class JdbcDaoTemplate {
 
@@ -33,9 +32,10 @@ public class JdbcDaoTemplate {
             PreparedStatement ps = conn.prepareStatement(sql);
 
             int i = 0;
-            for (Object param : parameters) {
-                ps.setObject(++i, param);
-            }
+            if (parameters.size()>0 && parameters!=null)
+                for (Object param : parameters) {
+                    ps.setObject(++i, param);
+                }
 
             ResultSet rs = ps.executeQuery();
 
@@ -58,6 +58,29 @@ public class JdbcDaoTemplate {
                     ps.setObject(++i, param);
             }
             return ps.executeUpdate();
+        }
+    }
+
+
+    public Map<String, Object> queryUpdate(String sql, List<Object> parameters, String ...generatedKeys) throws SQLException {
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            int i = 0;
+            for (Object param : parameters) {
+                ps.setObject(++i, param);
+            }
+
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            Map<String, Object> result = new HashMap<>();
+            while (rs.next()) {
+                for (String key : generatedKeys) {
+                    result.put(key, rs.getObject(key));
+                }
+            }
+            return result;
         }
     }
 

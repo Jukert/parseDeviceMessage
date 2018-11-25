@@ -10,6 +10,7 @@ public interface DeviceDao {
 
      void remove(String id);
 
+
      List<Device> findAll();
 
      Device findOne(int id);

@@ -13,9 +13,9 @@ public class MessageDaoDb extends JdbcDaoTemplate implements MessageDao {
 
     private DeviceDao deviceDao;
 
-    public MessageDaoDb() {
-        super();
-        this.deviceDao = new DeviceDaoDb();
+
+    public MessageDaoDb(DeviceDao deviceDao) {
+        this.deviceDao = deviceDao;
     }
 
     @Override
@@ -32,8 +32,7 @@ public class MessageDaoDb extends JdbcDaoTemplate implements MessageDao {
                         "sats, " +
                         "params) " +
                         "VALUES (" +
-                        "(SELECT id from device " +
-                            "WHERE imei=?)," +   //0
+                        "?," +//0
                         "?," +//1
                         "?," +//2
                         "?," +//3
@@ -41,11 +40,23 @@ public class MessageDaoDb extends JdbcDaoTemplate implements MessageDao {
                         "?," +//5
                         "?," +//6
                         "?," +//7
-                        "?" +//8
+                        "? " +//8
                         ")";
 
         List<Object> deviceOptions = new ArrayList<>();
-        deviceOptions.add(message.getDevice().getImei());
+        deviceOptions.add(
+                DeviceDaoDb.getDeviceMap()
+                        .entrySet()
+                        .stream()
+                        .filter(
+                                e -> e.getKey().equals(
+                                        message.getDevice().getImei()
+                                )
+                        )
+                        .map(x->x.getValue())
+                        .findFirst()
+                        .orElse(null)
+        );
         deviceOptions.add(message.getDate());
         deviceOptions.add(message.getLatitude());
         deviceOptions.add(message.getLongitude());

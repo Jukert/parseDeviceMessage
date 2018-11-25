@@ -1,4 +1,5 @@
 import common.Message;
+import dao.DeviceDaoDb;
 import dao.MessageDaoDb;
 import dao.interfaces.MessageDao;
 import reader.MessageReader;
@@ -10,7 +11,7 @@ public class Application {
     public static void main(String[] args) {
 
         MessageReader reader = new MessageReader("C:\\Users\\User\\Desktop\\programms\\Java\\parsedate\\src\\main\\resources\\data\\messages_backup.txt");
-        MessageDao messageDao = new MessageDaoDb();
+        MessageDao messageDao = new MessageDaoDb(new DeviceDaoDb());
 
         try {
             for (Message d :
